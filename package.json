@@ -1,0 +1,19 @@
+{
+  "name": "logistic_website",
+  "version": "1.0.0",
+  "description": "Program Storage Test",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "author": "Vitaliy Zhyryk",
+  "license": "ISC",
+  "devDependecies": {
+    "parcel": "^2.0.0"
+  },
+  "dependencies": {
+    "joi": "^17.4.2",
+    "lodash.debounced": "^4.0.8",
+    "shortid": "^2.2.16"
+  }
+}

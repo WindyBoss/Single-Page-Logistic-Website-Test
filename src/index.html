@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+    <div class=" measure-container">
+    </div>
+    <div class="main-container">
+        <div class="out-container">
+            <p class="out-container__text">Write the taken weight number</p>
+            <input type="text" class="out-container__input" data-input="taken">
+            <select name="measures" class="container__select" data-input="select">
+                <option value="empty" data-delete>Select weight measure</option>
+                <option value="tonnes" class="container__select-option">tonnes</option>
+                <option value="kg" class="container__select-option">kg</option>
+                <option value="grams" class="container__select-option">grams</option>
+                <option value="lbs" class="container__select-option">lbs</option>
+            </select>
+            <select name="marketplace" class="marketplace__select" data-input="select">
+                <option value="empty" class="marketplace__option">Select Marketplace</option>
+            </select>
+            <button class="out-container__button" data-button="taken">Take</button>
+        </div>
+        <div class="left-container">
+            <p class="left-container__text" data-text="info">Left on warehouse:</p>
+            <select name="measures" class="container__select" data-input="select">
+                <option value="empty" data-delete>Select weight measure</option>
+                <option value="tonnes" class="container__select-option">tonnes</option>
+                <option value="kg" class="container__select-option">kg</option>
+                <option value="grams" class="container__select-option">grams</option>
+                <option value="lbs" class="container__select-option">lbs</option>
+            </select>
+            <select name="product" class="product-type__select" data-input="select">
+                <option value="empty" class="product-type__option">Select Product</option>
+            </select>       
+        </div>
+        <div class="in-container">
+            <p class="in-container__text">Write the added weight number</p>
+            <input type="text" class="out-container__input" data-input="added">
+            <select name="measures" class="container__select" data-input="select">
+                <option value="empty" data-delete>Select weight measure</option>
+                <option value="tonnes" class="container__select-option">tonnes</option>
+                <option value="kg" class="container__select-option">kg</option>
+                <option value="grams" class="container__select-option">grams</option>
+                <option value="lbs" class="container__select-option">lbs</option>
+            </select>
+            <button class="in-container__button" data-button="added">Add</button>
+        </div>
+    </div>
+    <div class='table-container'>
+        <div class='filter-container'>
+            <div class='filter-container__type'>
+                <select class="new-filter">
+                    <option value="empty" data-delete>Select Type</option>
+                    <option value="taken">taken</option>
+                    <option value="added">added</option>
+                </select>
+            </div>
+            <div class="product-filter">
+                <select name="product" class="product-filter__select">
+                    <option value="empty" class="product-filter__option">Select Product</option>
+                </select>
+            </div>
+            <div class="marketplace-filter">
+                <select name="marketplace" class="marketplace-filter__select">
+                    <option value="empty" class="marketplace-filter__option">Select marketplace</option>
+                </select>
+            </div>
+            <div class="date-container">
+                <div class="start-date-container">
+                    <p>Start Date</p>
+                    <input class="start-date-input" type="date" placeholder="enter start date">
+                </div>
+                <div class="end-date-container">
+                    <p>End Date</p>
+                    <input class="end-date-input" type="date" placeholder="enter end date">
+                </div>
+            </div>
+            <div class="weight-range">
+                <div class="min-weight-container">
+                    <p>Min Weight (lbs)</p>
+                    <input class="min-weight-input">
+                </div>
+                <div class="max-weight-container">
+                    <p>Max Weight (lbs)</p>
+                    <input class="max-weight-input">
+                </div>
+            </div>
+            <button class="filter-activator">Activate Filter</button>
+            <button class="filter-reset">Reset Filter</button>
+        </div>
+        <table class='story-table'>
+            <tr class='main-line'>
+                <td class="number">Number</td>
+                <td class='id'>Transaction ID</td>
+                <td class='product'>Product</td>
+                <td class='marketplace'>Marketplace</td>
+                <td class="type">Type</td>
+                <td class='time'>Time</td>
+                <td class='date'>Date</td>
+                <td class='weight'>Weight</td>
+                <td class='measurement'>Measurement</td>
+                <td class='stock'>Left on Stock</td>
+            </tr>
+        </table>
+    </div>
+    <div class="add-product">
+        <button class="add-product__button js-open-btn" type='button'>Add a product</button>
+        <div class="add-product__container">
+            <form action="" class="add-product__form">
+                <h2 class="add-product__form-title">Add The Product Form</h2>
+                <div class="add-product__form-container">
+                    <p class="add-product__form-input-comment">Product Name</p>
+                    <input type="text" class="add-product__form-input js-input-name" name="name" placeholder="write product name">
+                </div>
+                <div class="add-product__form-container">
+                    <p class="add-product__form-input-comment">Code EAN</p>
+                    <input type="text" class="add-product__form-input js-input-ean" name="ean" placeholder="write EAN code">
+                </div>
+                <div class="add-product__form-container">
+                    <p class="add-product__form-input-comment">Internal Code</p>
+                    <input type="text" class="add-product__form-input js-input-prodcode" name="product-code" placeholder="write Internal Product Code">
+                </div>
+                <button class="add-product__btn-confirm js-close-btn" type="button" onlick="return false">Confirm new Product</button>
+            </form>
+        </div>
+    </div>
+    <div class="add-marketplace">
+        <button class="add-marketplace__button" type='button'>Add a marketplace</button>
+        <input type="text" class="add-marketplace__input" placeholder="write marketplace">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+    <script src="./calculation.js" type="module"></script>
+</body>
+
+</html>
