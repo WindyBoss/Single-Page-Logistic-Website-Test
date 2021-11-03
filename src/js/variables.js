@@ -1,7 +1,4 @@
 export const static = {
-    maxStorageFacility: {
-        tonnes: 20000,
-    },
     KG: 'kg',
     LBS: 'lbs',
     TONNES: 'tonnes',
@@ -34,18 +31,27 @@ export const leftContainerEls = {
     product: leftContainer.querySelector(".product-type__select"),
 }
 
-const tableContainer = document.querySelector('.table-container');
+export const productInfoContainer = document.querySelector('.product-info');
+// export const productInfoContainerEls = {
+
+// } 
+
+
+export const tableContainer = document.querySelector('.table-container');
 export const tableElements = {
+    addFiltersBtn: tableContainer.querySelector('.add-filter-btn'),
+    filterContainer: tableContainer.querySelector('.filter-container'),
     typeFilter: tableContainer.querySelector('.new-filter'),
     startDateFilter: tableContainer.querySelector('.start-date-input'),
     endDateFilter: tableContainer.querySelector('.end-date-input'),
     minWeightInput: tableContainer.querySelector('.min-weight-input'),
     maxWeightInput: tableContainer.querySelector('.max-weight-input'),
     productSelect: tableContainer.querySelector('.product-filter__select'),
-    marketplaceSelect: tableContainer.querySelector('.marketplace-filter__select'),    
+    marketplaceSelect: tableContainer.querySelector('.marketplace-filter__select'),
     filterActivator: tableContainer.querySelector('.filter-activator'),
     filterReset: tableContainer.querySelector('.filter-reset'),
     optionDelete: tableContainer.querySelector("[data-delete]"),
+    showFilters: tableContainer.querySelector('.show-filters__container'),
 
     optionType: tableContainer.querySelector('[data-option="type"]'),
     optionDate: tableContainer.querySelector('[data-option="date"]'),
@@ -58,6 +64,7 @@ export const allTransactions = [];
 
 const addProductModalContainer = document.querySelector('.add-product');
 export const addProductModalEls = {
+    modal: addProductModalContainer.querySelector('.add-product__container'),
     openBtnEl: addProductModalContainer.querySelector('.js-open-btn'),
     closeBtnEl: addProductModalContainer.querySelector('.js-close-btn'),
 
@@ -70,4 +77,10 @@ const marketplaceContainer = document.querySelector('.add-marketplace');
 export const marketplaceContainerEls = {
     btn: marketplaceContainer.querySelector('.add-marketplace__button'),
     input: marketplaceContainer.querySelector('.add-marketplace__input')
+}
+
+const storageContainer = document.querySelector('.storage-limit');
+export const storageContainerEls = {
+    btn: storageContainer.querySelector('.storage-limit__button'),
+    input: storageContainer.querySelector('.storage-limit__input'),
 }

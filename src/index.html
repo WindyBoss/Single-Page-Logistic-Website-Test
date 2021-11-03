@@ -15,7 +15,7 @@
     <div class="main-container">
         <div class="out-container">
             <p class="out-container__text">Write the taken weight number</p>
-            <input type="text" class="out-container__input" data-input="taken">
+            <input type="number" class="out-container__input" data-input="taken">
             <select name="measures" class="container__select" data-input="select">
                 <option value="empty" data-delete>Select weight measure</option>
                 <option value="tonnes" class="container__select-option">tonnes</option>
@@ -39,11 +39,11 @@
             </select>
             <select name="product" class="product-type__select" data-input="select">
                 <option value="empty" class="product-type__option">Select Product</option>
-            </select>       
+            </select>
         </div>
         <div class="in-container">
             <p class="in-container__text">Write the added weight number</p>
-            <input type="text" class="out-container__input" data-input="added">
+            <input type="number" class="out-container__input" data-input="added">
             <select name="measures" class="container__select" data-input="select">
                 <option value="empty" data-delete>Select weight measure</option>
                 <option value="tonnes" class="container__select-option">tonnes</option>
@@ -54,7 +54,12 @@
             <button class="in-container__button" data-button="added">Add</button>
         </div>
     </div>
+    <div class="product-info">
+
+    </div>
     <div class='table-container'>
+        <h2 class="filter-title">Add Filter</h2>
+        <button class="add-filter-btn">Add filters</button>
         <div class='filter-container'>
             <div class='filter-container__type'>
                 <select class="new-filter">
@@ -86,16 +91,18 @@
             <div class="weight-range">
                 <div class="min-weight-container">
                     <p>Min Weight (lbs)</p>
-                    <input class="min-weight-input">
+                    <input class="min-weight-input" type="number">
                 </div>
                 <div class="max-weight-container">
                     <p>Max Weight (lbs)</p>
-                    <input class="max-weight-input">
+                    <input class="max-weight-input" type="number">
                 </div>
             </div>
             <button class="filter-activator">Activate Filter</button>
             <button class="filter-reset">Reset Filter</button>
         </div>
+        <div class="show-filters__container"></div>
+        <h2 class="table-title">Product Rotation Table</h2>
         <table class='story-table'>
             <tr class='main-line'>
                 <td class="number">Number</td>
@@ -112,6 +119,7 @@
         </table>
     </div>
     <div class="add-product">
+        <p class="storage-limit__title">Add The Product</p>
         <button class="add-product__button js-open-btn" type='button'>Add a product</button>
         <div class="add-product__container">
             <form action="" class="add-product__form">
@@ -122,7 +130,7 @@
                 </div>
                 <div class="add-product__form-container">
                     <p class="add-product__form-input-comment">Code EAN</p>
-                    <input type="text" class="add-product__form-input js-input-ean" name="ean" placeholder="write EAN code">
+                    <input type="number" class="add-product__form-input js-input-ean" name="ean" placeholder="write EAN code">
                 </div>
                 <div class="add-product__form-container">
                     <p class="add-product__form-input-comment">Internal Code</p>
@@ -133,8 +141,14 @@
         </div>
     </div>
     <div class="add-marketplace">
+        <p class="storage-limit__title">Add The Marketplace</p>
         <button class="add-marketplace__button" type='button'>Add a marketplace</button>
         <input type="text" class="add-marketplace__input" placeholder="write marketplace">
+    </div>
+    <div class="storage-limit">
+        <p class="storage-limit__title">Change Storage Limit (tonnes)</p>
+        <input type="number" class="storage-limit__input">
+        <button class="storage-limit__button">Change Storage Limit</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
     <script src="./calculation.js" type="module"></script>

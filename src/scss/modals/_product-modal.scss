@@ -1,0 +1,15 @@
+.add-product__container {
+    opacity: 0;
+}
+
+.add-product__container.is-open {
+    opacity: 1;
+}
+
+.filter-container {
+    opacity: 0;
+}
+
+.filter-container.is-open {
+    opacity: 1;
+}

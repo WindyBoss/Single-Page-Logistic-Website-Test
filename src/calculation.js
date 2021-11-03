@@ -1,15 +1,33 @@
 // import * as validate from './js/validation';
+import * as classes from './scss/main.scss';
 import * as variable from './js/variables';
 import * as functions from './js/tablepost';
 import * as dateTime from './js/date-time';
 import * as filter from './js/table-filter';
-import { productRegister } from './js/add-product';
-import { marketplaceCreate }  from './js/marketplace';
+import { productRegister, addProductStorage } from './js/add-product';
+import { marketplaceCreate } from './js/marketplace';
+import * as style from './js/style';
+// import * as maxStorage from './js/storage-limit'
+
 const shortid = require('shortid');
 
 let previous = '';
 let now = '';
 let totalSum = 0;
+
+function storageLimitChange(event) {
+    console.log(event);
+
+    if (variable.storageContainerEls.input.value === '') {
+        alert("Enter the Value");
+        event.preventDefault()
+        return false;
+    };
+    storageLimit = Number(variable.storageContainerEls.input.value);
+    console.log(storageLimit);
+    // variable.storageContainerEls.input.value = '';
+    return storageLimit;
+}
 
 const setTheMainWeightMeasurement = function(sum) {
     variable.leftContainerEls.textEl.textContent = `Left on warehouse: ${sum.toFixed(2)} ${variable.leftContainerEls.selectEl.value}`;
@@ -19,13 +37,12 @@ const addButtonChangeRegister = function(event) {
     const changeType = 'added';
     const addedAmount = variable.inContainerEls.inputEl.value;
     const storageLimit = limitCalculator(variable.inContainerEls.selectEl.value);
-    console.log(storageLimit);
 
     if (variable.inContainerEls.selectEl.value === 'empty' || variable.leftContainerEls.selectEl.value === 'empty') {
         alert("Choose the measurements");
         event.preventDefault();
         return false;
-    } else if (isNaN(addedAmount) || addedAmount < 1) {
+    } else if (addedAmount < 1) {
         alert("Input not valid");
         event.preventDefault();
         return false;
@@ -33,17 +50,19 @@ const addButtonChangeRegister = function(event) {
         alert("More than storage can take");
         event.preventDefault();
         return false;
+    } else if (variable.leftContainerEls.product.value === 'empty') {
+        alert("Choose the product");
+        event.preventDefault();
+        return false;
     }
-
-
 
     totalSum += Number(
         weightMeasureChoice(addedAmount, variable.inContainerEls.selectEl)
     );
 
+    addProductStorage(variable.inContainerEls.inputEl.value, variable.leftContainerEls.product.value);
 
     setTheMainWeightMeasurement(totalSum);
-    console.log(totalSum);
 
     dataCollect(
         changeType,
@@ -52,34 +71,25 @@ const addButtonChangeRegister = function(event) {
         variable.inContainerEls.selectEl.value,
         event,
     );
-    console.log(totalSum);
+
 
     variable.inContainerEls.inputEl.value = '';
-
 }
 
-const limitCalculator = function (value) {
-    console.log(value);
-    console.log(variable.static.maxStorageFacility.tonnes);
-
+const limitCalculator = function(value) {
     let storateLimit = 0;
-    console.log(storateLimit);
-
+    console.log(storageLimitChange());
     if (value === variable.static.TONNES) {
-        storateLimit = variable.static.maxStorageFacility.tonnes;
-        console.log(storateLimit);
+        storateLimit = storageLimitChange();
         return storateLimit;
     } else if (value === variable.static.KG) {
-        storateLimit = variable.static.maxStorageFacility.tonnes * variable.static.METRICMULTIPLIER;
-        console.log(storateLimit);
+        storateLimit = storageLimitChange() * variable.static.METRICMULTIPLIER;
         return storateLimit;
     } else if (value === variable.static.GRAMS) {
-        storateLimit = variable.static.maxStorageFacility.tonnes * variable.static.METRICMULTIPLIER * variable.static.METRICMULTIPLIER;
-        console.log(storateLimit);
+        storateLimit = storageLimitChange() * variable.static.METRICMULTIPLIER * variable.static.METRICMULTIPLIER;
         return storateLimit;
     } else if (value === variable.static.LBS) {
-        storateLimit = variable.static.maxStorageFacility.tonnes * variable.static.METRICMULTIPLIER * variable.static.LBSMULTIPLIER;
-        console.log(storateLimit);
+        storateLimit = storageLimitChange() * variable.static.METRICMULTIPLIER * variable.static.LBSMULTIPLIER;
         return storateLimit;
     }
 }
@@ -88,11 +98,7 @@ const takeButtonChangeRegister = function(event) {
     const changeType = 'taken';
     const validationSum = totalSum;
     const takenAmount = variable.outContainerEls.inputEl.value;
-
-    console.log(totalSum);
-    console.log(validationSum);
-
-    if (isNaN(takenAmount) || takenAmount < 1) {
+    if (takenAmount < 1) {
         alert("Input not valid");
         event.preventDefault()
         return false;
@@ -103,6 +109,14 @@ const takeButtonChangeRegister = function(event) {
     ) {
         alert("Choose the measurements");
         event.preventDefault()
+        return false;
+    } else if (variable.leftContainerEls.product.value === 'empty') {
+        alert("Choose the product");
+        event.preventDefault();
+        return false;
+    } else if (variable.outContainerEls.marketplace.value === 'empty') {
+        alert("Choose the marketplace");
+        event.preventDefault();
         return false;
     }
 
@@ -126,18 +140,18 @@ const takeButtonChangeRegister = function(event) {
     variable.outContainerEls.inputEl.value = '';
 }
 
-const changeFunction = function(e) {
-    now = e.target.value;
+const changeFunction = function(event) {
+    now = event.target.value;
     return now;
 }
 
-const focusFunction = function(e) {
-    previous = e.target.value;
+const focusFunction = function(event) {
+    previous = event.target.value;
     return previous;
 
 }
 
-const equalFunction = function(e) {
+const equalFunction = function(event) {
     const newSum = totalSum;
 
     if (previous === variable.static.GRAMS && now === variable.static.KG) {
@@ -177,7 +191,7 @@ const equalFunction = function(e) {
         totalSum = newSum * 2200;
         setTheMainWeightMeasurement(totalSum);
     };
-    e
+    event
         .target
         .blur();
 };
@@ -281,17 +295,20 @@ const weightTotalLbsConverter = function(totalSum, selectorValue) {
 
 };
 
-const transactionProductName = function () {
+const transactionProductName = function() {
     console.log(variable.leftContainerEls.product.value);
-    return variable.leftContainerEls.product.value 
+    return variable.leftContainerEls.product.value
 }
 
-const transactionMarketplace = function (changeType) {
+const transactionMarketplace = function(changeType) {
     if (changeType === 'added') {
-        return 'nothing';
+        return '---';
     }
-    return variable.outContainerEls.marketplace.value 
+    return variable.outContainerEls.marketplace.value
 }
+
+
+
 
 
 variable.outContainerEls.selectEl.addEventListener('change', () => { variable.outContainerEls.optionDelete.remove() });
@@ -304,7 +321,13 @@ variable.outContainerEls.buttonEl.addEventListener('click', takeButtonChangeRegi
 variable.leftContainerEls.selectEl.addEventListener('change', changeFunction);
 variable.leftContainerEls.selectEl.addEventListener('focus', focusFunction);
 variable.leftContainerEls.selectEl.addEventListener('change', equalFunction);
+variable.tableElements.addFiltersBtn.addEventListener('click', style.addFilters)
 variable.tableElements.filterActivator.addEventListener('click', filter.FilterFunction);
+
+
 variable.tableElements.filterReset.addEventListener('click', filter.filterReset);
+variable.addProductModalEls.openBtnEl.addEventListener('click', style.openAddProductModal);
 variable.addProductModalEls.closeBtnEl.addEventListener('click', productRegister);
-variable.marketplaceContainerEls.btn.addEventListener('click', marketplaceCreate)
+variable.addProductModalEls.closeBtnEl.addEventListener('click', style.openAddProductModal);
+variable.marketplaceContainerEls.btn.addEventListener('click', marketplaceCreate);
+variable.storageContainerEls.btn.addEventListener('click', storageLimitChange);
